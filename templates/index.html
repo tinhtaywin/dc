@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="my">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>BINGO Game Shop</title>
+    <link href="https://fonts.googleapis.com/css2?family=Rajdhani:wght@500;700&display=swap" rel="stylesheet">
+    <style>
+        :root { 
+            --accent: #00d2ff; 
+            --secondary: #e94560; 
+            --glass: rgba(15, 15, 15, 0.9); 
+            --border: rgba(255, 255, 255, 0.12); 
+        }
+        
+        body { 
+            background: #000; 
+            background-image: radial-gradient(circle at 50% -20%, #00d2ff15, transparent),
+                              radial-gradient(circle at 0% 100%, #e9456010, transparent);
+            background-attachment: fixed;
+            color: white; 
+            font-family: 'Rajdhani', sans-serif;
+            margin: 0; padding: 20px; 
+            display: flex; flex-direction: column; align-items: center; 
+            min-height: 100vh;
+        }
+
+        h1 { 
+            font-size: 1.8rem; 
+            font-weight: 700;
+            letter-spacing: 2px; 
+            text-transform: uppercase; 
+            margin-bottom: 5px; 
+            color: #fff;
+            text-shadow: 0 0 10px var(--accent);
+        }
+        
+        .tabs { display: flex; background: rgba(255,255,255,0.05); padding: 5px; border-radius: 15px; border: 1px solid var(--border); margin: 20px 0; width: 100%; max-width: 320px; position: sticky; top: 10px; z-index: 1000; backdrop-filter: blur(15px); }
+        .tab { flex: 1; padding: 12px; text-align: center; cursor: pointer; border-radius: 12px; font-weight: bold; color: #888; transition: 0.3s; font-size: 1rem; }
+        .tab.active { background: var(--accent); color: #000; box-shadow: 0 0 20px var(--accent); }
+
+        .grid { display: none; grid-template-columns: repeat(2, 1fr); gap: 12px; width: 100%; max-width: 500px; }
+        .grid.active { display: grid; }
+
+        .card { background: var(--glass); border: 1px solid var(--border); border-radius: 18px; padding: 25px 5px 20px 5px; text-align: center; position: relative; overflow: visible; }
+        
+        /* Special Header Card */
+        .card.special { 
+            grid-column: span 2; 
+            border: 1.5px solid var(--accent); 
+            background: linear-gradient(135deg, rgba(0, 210, 255, 0.15), rgba(0, 0, 0, 0.5));
+            margin-bottom: 5px;
+        }
+
+        .val-container { display: flex; align-items: center; justify-content: center; gap: 8px; margin-bottom: 10px; transition: 0.3s; }
+        .item-icon { width: 26px; height: 26px; object-fit: contain; }
+        .val-text { font-size: 1.15rem; font-weight: 700; color: #fff; }
+
+        .price-row { display: flex; justify-content: center; align-items: center; gap: 4px; font-size: 1.1rem; font-weight: 700; transition: 0.3s; }
+        .p-num { color: #ffffff; }
+        .p-ks { color: var(--accent); }
+        .price-glow { text-shadow: 0 0 8px var(--accent); animation: softPulse 2s infinite alternate; }
+
+        @keyframes softPulse { from { opacity: 0.8; } to { opacity: 1; filter: brightness(1.2); } }
+
+        /* MASKING: Hide price, keep Icon visible */
+        .card.na .price-row, .card.so .price-row { visibility: hidden; opacity: 0; }
+        .card.na .val-container, .card.so .val-container { opacity: 0.4; filter: grayscale(1); }
+
+        .tag { position: absolute; top: -10px; right: 10px; font-size: 0.6rem; padding: 4px 10px; border-radius: 8px; font-weight: bold; z-index: 10; text-transform: uppercase; }
+        .tag-hot { background: var(--secondary); color: white; box-shadow: 0 4px 10px rgba(233, 69, 96, 0.3); }
+        .tag-best { background: #FFD700; color: #000; box-shadow: 0 4px 10px rgba(255, 215, 0, 0.3); }
+        
+        /* Lowered status label */
+        .status-label { 
+            position: absolute; bottom: 12px; left: 50%; transform: translateX(-50%); 
+            background: #e94560; color: white; padding: 7px 0; border-radius: 6px; 
+            font-size: 0.7rem; width: 90%; z-index: 100; font-weight: bold;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.5); white-space: nowrap;
+        }
+        .na .status-label { background: #444; }
+
+        .footer { margin-top: 40px; text-align: center; background: rgba(255,255,255,0.03); padding: 25px; border-radius: 20px; width: 100%; max-width: 350px; border: 1px solid var(--border); margin-bottom: 20px; }
+        .social-icons { display: flex; justify-content: center; gap: 40px; margin-top: 20px; }
+        .icon img { width: 45px; height: 45px; }
+
+        @media (max-width: 380px) { .val-text { font-size: 1rem; } .price-row { font-size: 0.95rem; } }
+    </style>
+</head>
+<body>
+    <h1>BINGO Game Shop</h1>
+
+    <div class="tabs">
+        <div class="tab active" onclick="showGame('mlbb', this)">MLBB</div>
+        <div class="tab" onclick="showGame('pubg', this)">PUBG</div>
+    </div>
+
+    <div id="mlbb" class="grid active">
+        <div class="card special">
+            <div class="tag tag-best">Best Selling Item</div>
+            <div class="val-container">
+                <img src="https://kaleoz-media.seagmcdn.com/kaleoz-store/202507/oss-5688309140de008981f3f4ea00164752.png" class="item-icon">
+                <span class="val-text">Weekly Diamond Pass</span>
+            </div>
+            <div class="price-row price-glow">
+                <span class="p-num">{{ special.ks }}</span>
+                <span class="p-ks">Ks</span>
+            </div>
+        </div>
+        
+        {% for item in mlbb %}
+        <div class="card {{ item.tag | lower }}">
+            {% if item.tag == 'HOT' %}<div class="tag tag-hot">HOT</div>{% endif %}
+            
+            {% if item.tag == 'NA' %}<div class="status-label">ပစ္စည်းဝယ်မရသေးပါ</div>
+            {% elif item.tag == 'SO' %}<div class="status-label">ပစ္စည်းပြတ်နေပါတယ်</div>{% endif %}
+
+            <div class="val-container">
+                <img src="https://www.pngall.com/wp-content/uploads/18/Mobile-Legends-Diamond-Icon-PNG.png" class="item-icon">
+                <span class="val-text">{{ item.dia }}</span>
+            </div>
+            <div class="price-row price-glow"><span class="p-num">{{ item.ks }}</span><span class="p-ks">Ks</span></div>
+        </div>
+        {% endfor %}
+    </div>
+
+    <div id="pubg" class="grid">
+        {% for item in pubg %}
+        <div class="card {{ item.tag | lower }}">
+            {% if item.tag == 'HOT' %}<div class="tag tag-hot">HOT</div>{% endif %}
+            
+            {% if item.tag == 'NA' %}<div class="status-label">ပစ္စည်းဝယ်မရသေးပါ</div>
+            {% elif item.tag == 'SO' %}<div class="status-label">ပစ္စည်းပြတ်နေပါတယ်</div>{% endif %}
+
+            <div class="val-container">
+                <img src="https://i0.wp.com/news.seagm.com/wp-content/uploads/2025/01/gggg.webp" class="item-icon">
+                <span class="val-text">{{ item.uc }} UC</span>
+            </div>
+            <div class="price-row price-glow"><span class="p-num">{{ item.ks }}</span><span class="p-ks">Ks</span></div>
+        </div>
+        {% endfor %}
+    </div>
+
+    <div class="footer">
+        <div style="font-weight: bold; letter-spacing: 2px; font-size: 0.9rem; color: #888;">ဝယ်ယူလိုပါက</div>
+        <div class="social-icons">
+            <a href="tg://resolve?domain=gg" class="icon"><img src="https://upload.wikimedia.org/wikipedia/commons/8/82/Telegram_logo.svg"></a>
+            <a href="https://m.me/YOUR_PAGE_ID" class="icon"><img src="https://upload.wikimedia.org/wikipedia/commons/b/be/Facebook_Messenger_logo_2020.svg"></a>
+        </div>
+    </div>
+
+    <script>
+        function showGame(game, el) {
+            document.querySelectorAll('.grid').forEach(g => g.classList.remove('active'));
+            document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+            document.getElementById(game).classList.add('active');
+            el.classList.add('active');
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+
+        // Automatic Comma Formatting for Prices
+        document.addEventListener("DOMContentLoaded", function() {
+            // Select all elements with class 'p-num' (prices only)
+            document.querySelectorAll('.p-num').forEach(function(el) {
+                // Get the text, remove old commas just in case
+                let rawNum = el.innerText.replace(/,/g, '').trim();
+                // Check if it's a valid number
+                if (!isNaN(rawNum) && rawNum !== '') {
+                    // Format with commas (e.g., 5500 -> 5,500)
+                    el.innerText = Number(rawNum).toLocaleString();
+                }
+            });
+        });
+    </script>
+</body>
+</html>

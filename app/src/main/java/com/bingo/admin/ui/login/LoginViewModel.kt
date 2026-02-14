@@ -3,9 +3,7 @@ package com.bingo.admin.ui.login
 import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.bingo.admin.data.remote.ApiService
-import com.bingo.admin.data.remote.ApiService.LoginRequest
-import com.bingo.admin.data.remote.ApiService.LoginResponse
+import com.bingo.admin.data.repository.BingoRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
@@ -15,7 +13,7 @@ import javax.inject.Inject
 
 @HiltViewModel
 class LoginViewModel @Inject constructor(
-    private val apiService: ApiService
+    private val repository: BingoRepository
 ) : ViewModel() {
     
     var username = mutableStateOf("")
@@ -33,23 +31,31 @@ class LoginViewModel @Inject constructor(
     private val _isLoggedIn = MutableStateFlow(false)
     val isLoggedIn: StateFlow<Boolean> = _isLoggedIn.asStateFlow()
     
+    // Store token for dashboard
+    private val _token = MutableStateFlow("")
+    val token: StateFlow<String> = _token.asStateFlow()
+    
     fun login() {
         viewModelScope.launch {
             _isLoading.value = true
             _error.value = ""
             
-            try {
-                val response = apiService.login(
-                    LoginRequest(username.value, password.value)
+            if (username.value.isBlank() || password.value.isBlank()) {
+                _error.value = "Please enter username and password"
+                _isLoading.value = false
+                return@launch
+            }
+            
+            repository.login(username.value, password.value).collect { result ->
+                result.fold(
+                    onSuccess = { response ->
+                        _token.value = response.token
+                        _isLoggedIn.value = true
+                    },
+                    onFailure = { e ->
+                        _error.value = "Login failed: ${e.message}"
+                    }
                 )
-                
-                // Store token (in real app, use DataStore or Secure Preferences)
-                // For now, we'll just mark as logged in
-                _isLoggedIn.value = true
-                
-            } catch (e: Exception) {
-                _error.value = "Login failed: ${e.message}"
-            } finally {
                 _isLoading.value = false
             }
         }

@@ -1,6 +1,6 @@
 package com.bingo.admin.ui.login;
 
-import com.bingo.admin.data.remote.ApiService;
+import com.bingo.admin.data.repository.BingoRepository;
 import dagger.internal.DaggerGenerated;
 import dagger.internal.Factory;
 import dagger.internal.QualifierMetadata;
@@ -22,22 +22,22 @@ import javax.inject.Provider;
     "KotlinInternalInJava"
 })
 public final class LoginViewModel_Factory implements Factory<LoginViewModel> {
-  private final Provider<ApiService> apiServiceProvider;
+  private final Provider<BingoRepository> repositoryProvider;
 
-  public LoginViewModel_Factory(Provider<ApiService> apiServiceProvider) {
-    this.apiServiceProvider = apiServiceProvider;
+  public LoginViewModel_Factory(Provider<BingoRepository> repositoryProvider) {
+    this.repositoryProvider = repositoryProvider;
   }
 
   @Override
   public LoginViewModel get() {
-    return newInstance(apiServiceProvider.get());
+    return newInstance(repositoryProvider.get());
   }
 
-  public static LoginViewModel_Factory create(Provider<ApiService> apiServiceProvider) {
-    return new LoginViewModel_Factory(apiServiceProvider);
+  public static LoginViewModel_Factory create(Provider<BingoRepository> repositoryProvider) {
+    return new LoginViewModel_Factory(repositoryProvider);
   }
 
-  public static LoginViewModel newInstance(ApiService apiService) {
-    return new LoginViewModel(apiService);
+  public static LoginViewModel newInstance(BingoRepository repository) {
+    return new LoginViewModel(repository);
   }
 }

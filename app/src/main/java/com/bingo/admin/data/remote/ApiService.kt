@@ -1,43 +1,43 @@
 package com.bingo.admin.data.remote
 
-import com.bingo.admin.data.model.GameItem
+import com.bingo.admin.data.model.LoginResponse
+import com.bingo.admin.data.model.PricesResponse
+import com.bingo.admin.data.model.PriceUpdateRequest
+import com.bingo.admin.data.model.SpecialUpdateRequest
+import com.bingo.admin.data.model.UpdateResponse
 import retrofit2.http.Body
 import retrofit2.http.GET
 import retrofit2.http.Header
 import retrofit2.http.POST
 import retrofit2.http.PUT
-import retrofit2.http.Path
 
 interface ApiService {
     
-    @POST("api/auth/login")
+    @POST("api/login")
     suspend fun login(
         @Body loginRequest: LoginRequest
     ): LoginResponse
     
-    @GET("api/games")
-    suspend fun getGameItems(
+    @GET("api/data")
+    suspend fun getData(
         @Header("Authorization") token: String
-    ): List<GameItem>
+    ): PricesResponse
     
-    @PUT("api/games/{id}/price")
-    suspend fun updateGamePrice(
-        @Path("id") gameId: String,
+    @PUT("api/update-item")
+    suspend fun updateItem(
         @Header("Authorization") token: String,
         @Body priceUpdateRequest: PriceUpdateRequest
-    ): GameItem
+    ): UpdateResponse
     
+    @PUT("api/update-special")
+    suspend fun updateSpecial(
+        @Header("Authorization") token: String,
+        @Body specialUpdateRequest: SpecialUpdateRequest
+    ): UpdateResponse
+    
+    // Request data classes
     data class LoginRequest(
         val username: String,
         val password: String
-    )
-    
-    data class LoginResponse(
-        val token: String,
-        val expiresIn: Long
-    )
-    
-    data class PriceUpdateRequest(
-        val newPrice: String
     )
 }

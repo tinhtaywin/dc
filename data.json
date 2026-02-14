@@ -1,0 +1,40 @@
+{
+    "special": {
+        "name": "Weekly Diamond Pass",
+        "icon": "https://kaleoz-media.seagmcdn.com/kaleoz-store/202507/oss-5688309140de008981f3f4ea00164752.png",
+        "ks": "6000",
+        "tag": "SPECIAL"
+    },
+    "mlbb": [
+        {"id": "mlbb_1", "dia": "11", "ks": "1000", "tag": "NA"},
+        {"id": "mlbb_2", "dia": "22", "ks": "2000", "tag": "NA"},
+        {"id": "mlbb_3", "dia": "55", "ks": "3100", "tag": ""},
+        {"id": "mlbb_4", "dia": "86", "ks": "4900", "tag": ""},
+        {"id": "mlbb_5", "dia": "110", "ks": "6000", "tag": ""},
+        {"id": "mlbb_6", "dia": "172", "ks": "9700", "tag": ""},
+        {"id": "mlbb_7", "dia": "275", "ks": "14800", "tag": "HOT"},
+        {"id": "mlbb_8", "dia": "343", "ks": "19000", "tag": "HOT"},
+        {"id": "mlbb_9", "dia": "429", "ks": "23700", "tag": ""},
+        {"id": "mlbb_10", "dia": "565", "ks": "30400", "tag": "HOT"},
+        {"id": "mlbb_11", "dia": "600", "ks": "33000", "tag": ""},
+        {"id": "mlbb_12", "dia": "706", "ks": "38000", "tag": ""},
+        {"id": "mlbb_13", "dia": "878", "ks": "47500", "tag": ""},
+        {"id": "mlbb_14", "dia": "1049", "ks": "56800", "tag": ""},
+        {"id": "mlbb_15", "dia": "1412", "ks": "75800", "tag": ""},
+        {"id": "mlbb_16", "dia": "2195", "ks": "114800", "tag": ""},
+        {"id": "mlbb_17", "dia": "3688", "ks": "191400", "tag": ""},
+        {"id": "mlbb_18", "dia": "4394", "ks": "229300", "tag": ""},
+        {"id": "mlbb_19", "dia": "5532", "ks": "289000", "tag": ""},
+        {"id": "mlbb_20", "dia": "6238", "ks": "326900", "tag": ""},
+        {"id": "mlbb_21", "dia": "7727", "ks": "403700", "tag": ""},
+        {"id": "mlbb_22", "dia": "9288", "ks": "480000", "tag": ""}
+    ],
+    "pubg": [
+        {"id": "pubg_1", "uc": "60", "ks": "3800", "tag": "HOT"},
+        {"id": "pubg_2", "uc": "325", "ks": "19000", "tag": "HOT"},
+        {"id": "pubg_3", "uc": "660", "ks": "38000", "tag": ""},
+        {"id": "pubg_4", "uc": "1800", "ks": "95000", "tag": ""},
+        {"id": "pubg_5", "uc": "3850", "ks": "190000", "tag": ""},
+        {"id": "pubg_6", "uc": "8100", "ks": "380000", "tag": ""}
+    ]
+}
