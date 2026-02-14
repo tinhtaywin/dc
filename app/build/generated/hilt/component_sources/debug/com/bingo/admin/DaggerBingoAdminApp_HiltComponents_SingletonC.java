@@ -10,8 +10,6 @@ import com.bingo.admin.data.remote.ApiService;
 import com.bingo.admin.data.repository.BingoRepository;
 import com.bingo.admin.di.NetworkModule;
 import com.bingo.admin.di.NetworkModule_ProvideApiServiceFactory;
-import com.bingo.admin.di.NetworkModule_ProvideConverterFactoryFactory;
-import com.bingo.admin.di.NetworkModule_ProvideHttpClientFactory;
 import com.bingo.admin.di.NetworkModule_ProvideRetrofitFactory;
 import com.bingo.admin.ui.dashboard.DashboardViewModel;
 import com.bingo.admin.ui.dashboard.DashboardViewModel_HiltModules_KeyModule_ProvideFactory;
@@ -41,9 +39,7 @@ import java.util.Map;
 import java.util.Set;
 import javax.annotation.processing.Generated;
 import javax.inject.Provider;
-import okhttp3.OkHttpClient;
 import retrofit2.Retrofit;
-import retrofit2.converter.gson.GsonConverterFactory;
 
 @DaggerGenerated
 @Generated(
@@ -546,10 +542,6 @@ public final class DaggerBingoAdminApp_HiltComponents_SingletonC {
   private static final class SingletonCImpl extends BingoAdminApp_HiltComponents.SingletonC {
     private final SingletonCImpl singletonCImpl = this;
 
-    private Provider<OkHttpClient> provideHttpClientProvider;
-
-    private Provider<GsonConverterFactory> provideConverterFactoryProvider;
-
     private Provider<Retrofit> provideRetrofitProvider;
 
     private Provider<ApiService> provideApiServiceProvider;
@@ -564,8 +556,6 @@ public final class DaggerBingoAdminApp_HiltComponents_SingletonC {
 
     @SuppressWarnings("unchecked")
     private void initialize() {
-      this.provideHttpClientProvider = DoubleCheck.provider(new SwitchingProvider<OkHttpClient>(singletonCImpl, 3));
-      this.provideConverterFactoryProvider = DoubleCheck.provider(new SwitchingProvider<GsonConverterFactory>(singletonCImpl, 4));
       this.provideRetrofitProvider = DoubleCheck.provider(new SwitchingProvider<Retrofit>(singletonCImpl, 2));
       this.provideApiServiceProvider = DoubleCheck.provider(new SwitchingProvider<ApiService>(singletonCImpl, 1));
       this.bingoRepositoryProvider = DoubleCheck.provider(new SwitchingProvider<BingoRepository>(singletonCImpl, 0));
@@ -611,13 +601,7 @@ public final class DaggerBingoAdminApp_HiltComponents_SingletonC {
           return (T) NetworkModule_ProvideApiServiceFactory.provideApiService(singletonCImpl.provideRetrofitProvider.get());
 
           case 2: // retrofit2.Retrofit 
-          return (T) NetworkModule_ProvideRetrofitFactory.provideRetrofit(singletonCImpl.provideHttpClientProvider.get(), singletonCImpl.provideConverterFactoryProvider.get());
-
-          case 3: // okhttp3.OkHttpClient 
-          return (T) NetworkModule_ProvideHttpClientFactory.provideHttpClient();
-
-          case 4: // retrofit2.converter.gson.GsonConverterFactory 
-          return (T) NetworkModule_ProvideConverterFactoryFactory.provideConverterFactory();
+          return (T) NetworkModule_ProvideRetrofitFactory.provideRetrofit();
 
           default: throw new AssertionError(id);
         }

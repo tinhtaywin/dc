@@ -129,6 +129,7 @@ com.bingo.admin:style/Base.Widget.AppCompat.Light.ActionBar.Solid = 0x7f0f0083
 com.bingo.admin:style/Base.Widget.AppCompat.ImageButton = 0x7f0f0081
 com.bingo.admin:style/Base.Widget.AppCompat.DrawerArrowToggle.Common = 0x7f0f007e
 com.bingo.admin:style/Base.Widget.AppCompat.CompoundButton.Switch = 0x7f0f007c
+com.bingo.admin:xml/network_security_config = 0x7f110002
 com.bingo.admin:style/Base.Widget.AppCompat.CompoundButton.RadioButton = 0x7f0f007b
 com.bingo.admin:style/Base.Widget.AppCompat.ButtonBar.AlertDialog = 0x7f0f0079
 com.bingo.admin:style/Base.Widget.AppCompat.ButtonBar = 0x7f0f0078

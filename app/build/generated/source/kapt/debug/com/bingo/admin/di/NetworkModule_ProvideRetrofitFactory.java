@@ -6,10 +6,7 @@ import dagger.internal.Preconditions;
 import dagger.internal.QualifierMetadata;
 import dagger.internal.ScopeMetadata;
 import javax.annotation.processing.Generated;
-import javax.inject.Provider;
-import okhttp3.OkHttpClient;
 import retrofit2.Retrofit;
-import retrofit2.converter.gson.GsonConverterFactory;
 
 @ScopeMetadata("javax.inject.Singleton")
 @QualifierMetadata
@@ -25,29 +22,20 @@ import retrofit2.converter.gson.GsonConverterFactory;
     "KotlinInternalInJava"
 })
 public final class NetworkModule_ProvideRetrofitFactory implements Factory<Retrofit> {
-  private final Provider<OkHttpClient> okHttpClientProvider;
-
-  private final Provider<GsonConverterFactory> converterFactoryProvider;
-
-  public NetworkModule_ProvideRetrofitFactory(Provider<OkHttpClient> okHttpClientProvider,
-      Provider<GsonConverterFactory> converterFactoryProvider) {
-    this.okHttpClientProvider = okHttpClientProvider;
-    this.converterFactoryProvider = converterFactoryProvider;
-  }
-
   @Override
   public Retrofit get() {
-    return provideRetrofit(okHttpClientProvider.get(), converterFactoryProvider.get());
+    return provideRetrofit();
   }
 
-  public static NetworkModule_ProvideRetrofitFactory create(
-      Provider<OkHttpClient> okHttpClientProvider,
-      Provider<GsonConverterFactory> converterFactoryProvider) {
-    return new NetworkModule_ProvideRetrofitFactory(okHttpClientProvider, converterFactoryProvider);
+  public static NetworkModule_ProvideRetrofitFactory create() {
+    return InstanceHolder.INSTANCE;
   }
 
-  public static Retrofit provideRetrofit(OkHttpClient okHttpClient,
-      GsonConverterFactory converterFactory) {
-    return Preconditions.checkNotNullFromProvides(NetworkModule.INSTANCE.provideRetrofit(okHttpClient, converterFactory));
+  public static Retrofit provideRetrofit() {
+    return Preconditions.checkNotNullFromProvides(NetworkModule.INSTANCE.provideRetrofit());
+  }
+
+  private static final class InstanceHolder {
+    private static final NetworkModule_ProvideRetrofitFactory INSTANCE = new NetworkModule_ProvideRetrofitFactory();
   }
 }
