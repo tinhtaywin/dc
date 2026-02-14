@@ -2,8 +2,11 @@ name: Generate Release APK
 
 on:
   push:
+    branches:
+      - main
     tags:
       - 'v*' # v1.0, v1.1.0 စတာတွေ push လုပ်ရင် အလုပ်လုပ်မယ်
+  workflow_dispatch: # This allows us to click a button to start it
 
 jobs:
   release:
